@@ -1,5 +1,4 @@
 from PyQt5.QtWidgets import QMainWindow, QAction
-from controllers.build_controller import get_all_builds
 from ui.show_builds import ShowBuildsWidget
 
 class MainWindow(QMainWindow):
@@ -18,6 +17,5 @@ class MainWindow(QMainWindow):
         tools_menu.addAction(builds_action)
 
     def show_builds(self):
-        builds = get_all_builds()  # Appelle la fonction du contrôleur pour obtenir les builds
-        builds_widget = ShowBuildsWidget(builds)  # Crée le widget pour afficher les builds
-        self.setCentralWidget(builds_widget)  # Affiche le widget dans la fenêtre principale
+        builds_widget = ShowBuildsWidget()
+        self.setCentralWidget(builds_widget)
