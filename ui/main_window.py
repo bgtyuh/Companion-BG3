@@ -1,5 +1,5 @@
 from PyQt5.QtWidgets import QMainWindow, QAction
-from ui.show_builds import ShowBuildsWidget
+from ui.show_weapons import ShowWeaponsWidget
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -12,10 +12,10 @@ class MainWindow(QMainWindow):
         menubar = self.menuBar()
         tools_menu = menubar.addMenu("Outils")
 
-        builds_action = QAction("Gestion des Builds", self)
-        builds_action.triggered.connect(self.show_builds)
-        tools_menu.addAction(builds_action)
+        weapons_action = QAction("Afficher les Armes", self)
+        weapons_action.triggered.connect(self.show_weapons)
+        tools_menu.addAction(weapons_action)
 
-    def show_builds(self):
-        builds_widget = ShowBuildsWidget()
-        self.setCentralWidget(builds_widget)
+    def show_weapons(self):
+        weapons_widget = ShowWeaponsWidget()
+        self.setCentralWidget(weapons_widget)
