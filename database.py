@@ -2,7 +2,7 @@ import sqlite3
 
 def create_connection():
     """Crée une connexion à la base de données SQLite."""
-    conn = sqlite3.connect("bg3_companion.db")
+    conn = sqlite3.connect("data/bg3_companion.db")
     return conn
 
 def create_tables():
