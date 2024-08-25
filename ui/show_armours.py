@@ -1,8 +1,8 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidget, QListWidgetItem, QComboBox
-from controllers.weapon_controller import get_all_weapons, get_weapon_details
+from controllers.armour_controller import get_all_armours, get_armour_details
 
 
-class ShowWeaponsWidget(QWidget):
+class ShowarmoursWidget(QWidget):
     def __init__(self):
         """Initialise le widget pour afficher les armes et leurs détails.
 
@@ -13,15 +13,15 @@ class ShowWeaponsWidget(QWidget):
 
         layout = QVBoxLayout()
 
-        self.weapon_list = QListWidget()
-        self.weapon_list.itemClicked.connect(self.display_weapon_options)
-        layout.addWidget(self.weapon_list)
+        self.armour_list = QListWidget()
+        self.armour_list.itemClicked.connect(self.display_armour_options)
+        layout.addWidget(self.armour_list)
 
         self.detail_label = QLabel("Sélectionnez une arme pour voir les détails.")
         layout.addWidget(self.detail_label)
 
         self.options_combo = QComboBox()
-        self.options_combo.addItems(["Damage", "Notes", "Special Abilities", "Weapon Actions", "Weapon Locations"])
+        self.options_combo.addItems(["Armour", "Locations", "Specials"])
         self.options_combo.currentIndexChanged.connect(self.display_selected_info)
         layout.addWidget(self.options_combo)
         self.options_combo.hide()  # Cacher le menu déroulant au départ
@@ -29,23 +29,23 @@ class ShowWeaponsWidget(QWidget):
         self.setLayout(layout)
 
         # Charger la liste des armes
-        self.load_weapons()
+        self.load_armours()
 
-    def load_weapons(self):
+    def load_armours(self):
         """Charge la liste des armes depuis la base de données et les affiche dans la liste."""
-        weapons = get_all_weapons()
-        for weapon in weapons:
-            item = QListWidgetItem(f"{weapon[1]} - {weapon[2]}")
-            item.setData(1, weapon[0])  # Stocke l'ID de l'arme dans l'item
-            self.weapon_list.addItem(item)
+        armours = get_all_armours()
+        for armour in armours:
+            item = QListWidgetItem(f"{armour[1]} - {armour[2]}")
+            item.setData(1, armour[0])  # Stocke l'ID de l'arme dans l'item
+            self.armour_list.addItem(item)
 
-    def display_weapon_options(self, item):
+    def display_armour_options(self, item):
         """Affiche le menu déroulant pour choisir les détails à afficher pour l'arme sélectionnée.
 
         Arguments:
             item (QListWidgetItem): L'élément sélectionné dans la liste des armes.
         """
-        self.current_weapon_id = item.data(1)
+        self.current_armour_id = item.data(1)
         self.detail_label.setText(f"Sélectionnez les informations à afficher pour l'arme: {item.text()}")
         self.options_combo.show()
 
@@ -56,5 +56,5 @@ class ShowWeaponsWidget(QWidget):
         sélectionnée dans le menu déroulant et les affiche dans `detail_label`.
         """
         selected_option = self.options_combo.currentText()
-        details = get_weapon_details(self.current_weapon_id, selected_option)
+        details = get_armour_details(self.current_armour_id, selected_option)
         self.detail_label.setText(details)
