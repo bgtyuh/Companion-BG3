@@ -10,6 +10,7 @@ def create_builds_table():
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             race_name TEXT,
             class_name TEXT,
+            subclass_name TEXT,
             weapon_name TEXT,
             armor_name TEXT,
             footwear_name TEXT
@@ -18,6 +19,20 @@ def create_builds_table():
 
     conn.commit()
     conn.close()
+
+
+def alter_builds_table():
+    """Ajoute la colonne sous-classe à la table des builds."""
+    conn = sqlite3.connect('data/bg3_builds.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        ALTER TABLE builds ADD COLUMN subclass_name TEXT
+    ''')
+
+    conn.commit()
+    conn.close()
+
 
 def drop_table(table_name):
     """Supprime une table de la base de données.
@@ -42,5 +57,4 @@ def drop_table(table_name):
 
 
 if __name__ == '__main__':
-    drop_table("builds")
-    create_builds_table()
+    pass
