@@ -1,5 +1,7 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidget, QListWidgetItem
+
 from controllers.build_controller import get_all_builds, get_build_levels
+
 
 class ShowBuildsWidget(QWidget):
     def __init__(self):

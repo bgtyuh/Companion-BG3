@@ -1,15 +1,16 @@
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidget, QListWidgetItem, QComboBox
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QListWidget, QListWidgetItem, QComboBox, QPushButton
+
 from controllers.weapon_controller import get_all_weapons, get_weapon_details
 
 
 class ShowWeaponsWidget(QWidget):
-    def __init__(self):
+    def __init__(self, parent):
         """Initialise le widget pour afficher les armes et leurs détails.
 
         Crée l'interface utilisateur avec une liste d'armes, une zone pour afficher les détails,
         et un menu déroulant pour choisir les informations à afficher.
         """
-        super().__init__()
+        super().__init__(parent)
 
         layout = QVBoxLayout()
 
@@ -30,6 +31,17 @@ class ShowWeaponsWidget(QWidget):
 
         # Charger la liste des armes
         self.load_weapons()
+
+        # Bouton de retour au menu principal
+        back_button = QPushButton("Retour au menu principal")
+        back_button.clicked.connect(self.return_to_main)
+        layout.addWidget(back_button)
+
+        self.setLayout(layout)
+
+    def return_to_main(self):
+        """Retourne au menu principal."""
+        self.parent().show_main_menu()
 
     def load_weapons(self):
         """Charge la liste des armes depuis la base de données et les affiche dans la liste."""

@@ -1,10 +1,13 @@
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QComboBox, QPushButton
-from controllers.build_controller import get_races, get_classes, get_weapons, get_armors, get_footwears, save_build_to_db
+
+from controllers.build_controller import get_races, get_classes, get_weapons, get_armors, get_footwears, \
+    save_build_to_db
+
 
 class CreateBuildWidget(QWidget):
-    def __init__(self):
+    def __init__(self, parent):
         """Initialise le widget pour créer un nouveau build."""
-        super().__init__()
+        super().__init__(parent)
 
         layout = QVBoxLayout()
 
@@ -44,6 +47,17 @@ class CreateBuildWidget(QWidget):
         layout.addWidget(self.save_button)
 
         self.setLayout(layout)
+
+        # Bouton de retour au menu principal
+        back_button = QPushButton("Retour au menu principal")
+        back_button.clicked.connect(self.return_to_main)
+        layout.addWidget(back_button)
+
+        self.setLayout(layout)
+
+    def return_to_main(self):
+        """Retourne au menu principal."""
+        self.parent().show_main_menu()
 
     def save_build(self):
         """Enregistre le build sélectionné dans la base de données en utilisant les noms des items."""

@@ -81,3 +81,41 @@ def save_build_to_db(race_name, class_name, weapon_name, armor_name, footwear_na
 
     conn.commit()
     conn.close()
+
+
+def get_all_builds():
+    """Récupère tous les builds depuis la base de données."""
+    conn = sqlite3.connect('data/bg3_builds.db')
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM builds")
+    builds = cursor.fetchall()
+
+    conn.close()
+    return builds
+
+
+def delete_build(build_id):
+    """Supprime un build de la base de données."""
+    conn = sqlite3.connect('data/bg3_builds.db')
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM builds WHERE id = ?", (build_id,))
+
+    conn.commit()
+    conn.close()
+
+
+def update_build(build_id, race_name, class_name, weapon_name, armor_name, footwear_name):
+    """Met à jour un build dans la base de données."""
+    conn = sqlite3.connect('data/bg3_builds.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        UPDATE builds
+        SET race_name = ?, class_name = ?, weapon_name = ?, armor_name = ?, footwear_name = ?
+        WHERE id = ?
+    ''', (race_name, class_name, weapon_name, armor_name, footwear_name, build_id))
+
+    conn.commit()
+    conn.close()
