@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QMainWindow, QAction, QWidget, QVBoxLayout, QPushButton, QLabel
+from PyQt5.QtWidgets import QMainWindow, QAction, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout
 
 from ui.create_build import CreateBuildWidget
 from ui.manage_builds import ManageBuildsWidget
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
     def show_main_menu(self):
         """Affiche l'interface principale avec les boutons de navigation."""
         main_widget = QWidget()
-        layout = QVBoxLayout()
+        layout = QHBoxLayout()
 
         create_build_button = QPushButton("Créer un Build")
         create_build_button.clicked.connect(self.show_create_build)
