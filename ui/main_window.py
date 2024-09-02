@@ -81,15 +81,15 @@ class MainWindow(QMainWindow):
     def show_weapons_display(self):
         """Affiche les armes sous forme de cartes depuis la base de données."""
         weapons_data = get_all_weapons()  # Récupérer toutes les armes depuis la base de données
-        items_data = [{'name': weapon[1], 'image_path': weapon[-1]} for weapon in weapons_data]  # Adapter le format
-        items_display_widget = ItemsDisplayWidget(items_data, "weapon_images", self)
+        items_data = [{'name': weapon[1], 'image_path': weapon[-1], 'rarity': weapon[2]} for weapon in weapons_data]  # Adapter le format
+        items_display_widget = ItemsDisplayWidget(items_data, self)
         self.setCentralWidget(items_display_widget)
 
     def show_armours_display(self):
         """Affiche les armures sous forme de cartes depuis la base de données."""
         armours_data = get_all_armours()  # Récupérer toutes les armures depuis la base de données
-        items_data = [{'name': armour[1], 'image_path': armour[-1]} for armour in armours_data]  # Adapter le format
-        items_display_widget = ItemsDisplayWidget(items_data, "armour_images", self)
+        items_data = [{'name': armour[1], 'image_path': armour[-1], 'rarity': armour[5]} for armour in armours_data]  # Adapter le format
+        items_display_widget = ItemsDisplayWidget(items_data, self)
         self.setCentralWidget(items_display_widget)
 
     def show_about(self):

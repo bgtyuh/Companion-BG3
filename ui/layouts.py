@@ -1,12 +1,12 @@
-from PyQt5.QtCore import Qt, QRect, QSize
+from PyQt5.QtCore import Qt, QRect, QSize, QPoint
 from PyQt5.QtWidgets import QLayout, QSizePolicy
 
 class FlowLayout(QLayout):
-    def __init__(self, parent=None, margin=0, spacing=-1):
+    def __init__(self, parent=None, margin=0, spacing=10):
         super().__init__(parent)
         self.itemList = []
         self.setContentsMargins(margin, margin, margin, margin)
-        self.setSpacing(spacing)
+        self.setSpacing(spacing)  # Espacement constant entre les items
 
     def addItem(self, item):
         self.itemList.append(item)
@@ -47,7 +47,7 @@ class FlowLayout(QLayout):
         size += QSize(2 * self.contentsMargins().top(), 2 * self.contentsMargins().top())
         return size
 
-    def doLayout(self, rect, testOnly):
+    def doLayout(self, rect, testOnly=False):
         x = rect.x()
         y = rect.y()
         lineHeight = 0
@@ -67,6 +67,6 @@ class FlowLayout(QLayout):
                 item.setGeometry(QRect(QPoint(x, y), wid.sizeHint()))
 
             x = nextX
-            lineHeight = max(lineHeight, wid.sizeHint().height())
+            lineHeight = max(lineHeight, wid.sizeHint().height() + spaceY)  # Ajuste la hauteur
 
         return y + lineHeight - rect.y()
