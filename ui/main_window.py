@@ -1,11 +1,13 @@
 from PyQt5.QtWidgets import QMainWindow, QAction, QWidget, QVBoxLayout, QPushButton, QLabel, QHBoxLayout
 
+from controllers.armour_controller import get_all_armours
+from controllers.weapon_controller import get_all_weapons
 from ui.create_build import CreateBuildWidget
 from ui.manage_builds import ManageBuildsWidget
 from ui.modify_build import ModifyBuildWidget
 from ui.show_armours import ShowArmoursWidget
 from ui.show_weapons import ShowWeaponsWidget
-
+from ui.items_display_widget import ItemsDisplayWidget  # Importer le nouveau widget
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -47,11 +49,11 @@ class MainWindow(QMainWindow):
         layout.addWidget(manage_builds_button)
 
         weapons_button = QPushButton("Afficher les Armes")
-        weapons_button.clicked.connect(self.show_weapons)
+        weapons_button.clicked.connect(self.show_weapons_display)
         layout.addWidget(weapons_button)
 
         armours_button = QPushButton("Afficher les Armures")
-        armours_button.clicked.connect(self.show_armours)
+        armours_button.clicked.connect(self.show_armours_display)
         layout.addWidget(armours_button)
 
         info_label = QLabel("Sélectionnez une option pour commencer.")
@@ -76,17 +78,20 @@ class MainWindow(QMainWindow):
         modify_build_widget = ModifyBuildWidget(self, build_id, build_data)
         self.setCentralWidget(modify_build_widget)
 
-    def show_weapons(self):
-        """Affiche l'interface pour visualiser les armes."""
-        weapons_widget = ShowWeaponsWidget(self)
-        self.setCentralWidget(weapons_widget)
+    def show_weapons_display(self):
+        """Affiche les armes sous forme de cartes depuis la base de données."""
+        weapons_data = get_all_weapons()  # Récupérer toutes les armes depuis la base de données
+        items_data = [{'name': weapon[1], 'image_path': weapon[-1]} for weapon in weapons_data]  # Adapter le format
+        items_display_widget = ItemsDisplayWidget(items_data, "weapon_images", self)
+        self.setCentralWidget(items_display_widget)
 
-    def show_armours(self):
-        """Affiche l'interface pour visualiser les armures."""
-        armours_widget = ShowArmoursWidget(self)
-        self.setCentralWidget(armours_widget)
+    def show_armours_display(self):
+        """Affiche les armures sous forme de cartes depuis la base de données."""
+        armours_data = get_all_armours()  # Récupérer toutes les armures depuis la base de données
+        items_data = [{'name': armour[1], 'image_path': armour[-1]} for armour in armours_data]  # Adapter le format
+        items_display_widget = ItemsDisplayWidget(items_data, "armour_images", self)
+        self.setCentralWidget(items_display_widget)
 
     def show_about(self):
         """Affiche une fenêtre avec des informations sur l'application."""
-        # Implémenter une fenêtre modale ou un message d'information
         pass
