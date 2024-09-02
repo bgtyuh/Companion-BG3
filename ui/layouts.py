@@ -6,7 +6,7 @@ class FlowLayout(QLayout):
         super().__init__(parent)
         self.itemList = []
         self.setContentsMargins(margin, margin, margin, margin)
-        self.setSpacing(spacing)  # Espacement constant entre les items
+        self.setSpacing(spacing)  # Espacement constant
 
     def addItem(self, item):
         self.itemList.append(item)
@@ -47,7 +47,7 @@ class FlowLayout(QLayout):
         size += QSize(2 * self.contentsMargins().top(), 2 * self.contentsMargins().top())
         return size
 
-    def doLayout(self, rect, testOnly=False):
+    def doLayout(self, rect, testOnly):
         x = rect.x()
         y = rect.y()
         lineHeight = 0
@@ -67,6 +67,6 @@ class FlowLayout(QLayout):
                 item.setGeometry(QRect(QPoint(x, y), wid.sizeHint()))
 
             x = nextX
-            lineHeight = max(lineHeight, wid.sizeHint().height() + spaceY)  # Ajuste la hauteur
+            lineHeight = max(lineHeight, wid.sizeHint().height())
 
         return y + lineHeight - rect.y()
