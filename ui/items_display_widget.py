@@ -1,9 +1,5 @@
-from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QScrollArea, QFrame
 from ui.layouts import FlowLayout  # Importer le FlowLayout personnalisé
-from PyQt5.QtWidgets import QLabel
-from PyQt5.QtGui import QPixmap, QFont
-
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QLabel, QToolTip
 from PyQt5.QtGui import QPixmap, QFont, QCursor
 from PyQt5.QtCore import Qt
@@ -14,6 +10,7 @@ class ItemCard(QWidget):
         layout = QVBoxLayout()
 
         self.item_name = item_name
+        self.item_properties = item_properties  # Store the properties for hover display
         self.item_properties = item_properties  # Store the properties for hover display
 
         # Set a fixed size for the card
